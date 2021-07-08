@@ -1,5 +1,7 @@
 #include "MaxHeap.h"
 #include <iostream>
+#include <vector>
+#include <algorithm>
 using namespace std;
 
 void MaxHeap::Insert(int item) {
@@ -9,17 +11,37 @@ void MaxHeap::Insert(int item) {
 }
 
 int MaxHeap::Remove() {
+    if (count == 0) {
+        cout << "No items to delete: heap is empty" << endl;
+        return -1;
+    }
+
+    int retVal = data[1];
     data[1] = data[count];
     data[count] = 0;
     count--;
     ReheapDown();
+    return retVal;
 }
 
 void MaxHeap::PrintHeap() { // FIXME - NOT IN PRIORITY ORDER NECESSARILY
     cout << "Contents of heap: " << endl;
-    for (int i = 0; i < count; i++) {
-        cout << data[i] << endl;
+    // for (int i = 1; i <= count; i++) {
+    //     cout << data[i] << endl;
+    // }
+
+    vector<int> printData;
+    for (int i = 1; i <= count; i++) {
+        printData.push_back(data[i]);
     }
+
+    // Information about the sort function found at https://www.cplusplus.com/articles/NhA0RXSz/
+    sort(printData.begin(), printData.end());
+
+    for (int i = count; i > 0; i--) {
+        cout << printData[i - 1] << endl;
+    }
+    
 }
 
 int MaxHeap::ParentOf(int itemIndex) {
@@ -44,19 +66,19 @@ void MaxHeap::ReheapUp() {
     int newItem = count;
     int parent = ParentOf(count);
 
-    while (data[parent] > data[newItem]) {// new item needs to move up
-	    Swap(parent, count); // swaps values at two indexes
+    while (data[parent] < data[newItem]) {// new item needs to move up
+	    Swap(parent, newItem); // swaps values at two indexes
 	    newItem = ParentOf(newItem);
 	    parent = ParentOf(newItem);
 	}
 }
 
 void MaxHeap::ReheapDown() {
-    int parent = data[1];
+    int parent = 1;
 
-    while (data[parent] > data[LeftChild(parent)] || data[parent] > data[RightChild(parent)]) {
+    while (data[parent] < data[LeftChild(parent)] || data[parent] < data[RightChild(parent)]) {
 	// new item needs to move up
-        if (data[RightChild(parent)] > data[LeftChild(parent)]) {
+        if (data[RightChild(parent)] < data[LeftChild(parent)]) {
             Swap(parent, LeftChild(parent)); // swaps values at two indexes
             parent = LeftChild(parent);
         } else {
