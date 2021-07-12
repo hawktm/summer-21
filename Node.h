@@ -7,8 +7,8 @@ using namespace std;
 class Node {
     	
     public:	
-    string data;	
+    int data;	
     Node *next;	
-    Node(string *item);
+    Node(int *item);
 };
 #endif

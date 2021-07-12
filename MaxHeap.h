@@ -7,12 +7,13 @@ using namespace std;
 class MaxHeap {
     private:
         // Information on how to set data[0] to "infinity" found at https://stackoverflow.com/questions/8690567/setting-an-int-to-infinity-in-c
-        int data[100] = {numeric_limits<int>::max()};
+        int data[20000] = {numeric_limits<int>::max()};
         int count = 0;
 
     public:
         void Insert(int item);
         int Remove();
+        int Remove(int item);
         void PrintHeap();
 
         int ParentOf(int itemIndex);
@@ -21,6 +22,7 @@ class MaxHeap {
         void Swap(int parentIndex, int childIndex);
         void ReheapUp();
         void ReheapDown();
+        void ReheapDown(int itemIndex);
 
 
 };

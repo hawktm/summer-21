@@ -24,6 +24,30 @@ int MaxHeap::Remove() {
     return retVal;
 }
 
+int MaxHeap::Remove(int item) {
+    if (count == 0) {
+        cout << "No items to delete: heap is empty" << endl;
+        return -1;
+    }
+
+    int find = 1;
+    while(data[find] != item && find <= count) {
+        find++;
+    }
+
+    if (find > count) {
+        cout << "Item not found in heap" << endl;
+        return -1;
+    }
+
+    int retVal = data[find];
+    data[find] = data[count];
+    data[count] = 0;
+    count--;
+    ReheapDown(find);
+    return retVal;
+}
+
 void MaxHeap::PrintHeap() { // FIXME - NOT IN PRIORITY ORDER NECESSARILY
     cout << "Contents of heap: " << endl;
     // for (int i = 1; i <= count; i++) {
@@ -75,6 +99,21 @@ void MaxHeap::ReheapUp() {
 
 void MaxHeap::ReheapDown() {
     int parent = 1;
+
+    while (data[parent] < data[LeftChild(parent)] || data[parent] < data[RightChild(parent)]) {
+	// new item needs to move up
+        if (data[RightChild(parent)] < data[LeftChild(parent)]) {
+            Swap(parent, LeftChild(parent)); // swaps values at two indexes
+            parent = LeftChild(parent);
+        } else {
+            Swap(parent, RightChild(parent)); // swaps values at two indexes
+            parent = RightChild(parent);
+        }
+	}
+}
+
+void MaxHeap::ReheapDown(int itemIndex) {
+    int parent = itemIndex;
 
     while (data[parent] < data[LeftChild(parent)] || data[parent] < data[RightChild(parent)]) {
 	// new item needs to move up
