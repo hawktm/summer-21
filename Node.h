@@ -7,8 +7,9 @@ using namespace std;
 class Node {
     	
     public:	
-    int data;	
-    Node *next;	
-    Node(int *item);
+    string data;	
+    Node *next;
+    Node();
+    Node(string *item);
 };
 #endif

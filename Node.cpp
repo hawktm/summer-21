@@ -3,7 +3,11 @@
 #include <string>
 using namespace std;
 
-Node::Node(int *item){
+Node::Node() {
+    next = nullptr;
+}
+
+Node::Node(string *item){
     data = *item;
     next = nullptr;    
 }
